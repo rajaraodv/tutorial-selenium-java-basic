@@ -11,6 +11,10 @@ public class BasicDemo {
 
 	public static void main(String[] args) {
 
+        if(args.length >0 && "--dry-run".equals(args[0])) {
+            return;
+        }
+
 		// Use Chrome browser
 		WebDriver driver = new ChromeDriver();
 
@@ -19,7 +23,7 @@ public class BasicDemo {
 
 		// Set the API key from the env variable. Please read the "Important Note"
 		// section above.
-		eyes.setApiKey("APPLITOOLS_API_KEY");
+		eyes.setApiKey(System.getenv("APPLITOOLS_API_KEY"));
 
 		try {
 
@@ -28,11 +32,11 @@ public class BasicDemo {
 
 			// Navigate the browser to the "ACME" demo app
 			driver.get("https://demo.applitools.com");
-			
+
 			//To see visual bugs, change the above URL to:
 			//https://demo.applitools.com/index_v2.html and run the test again
-			
-			
+
+
 
 			// Visual checkpoint #1 - Check the login page.
 			eyes.checkWindow("Login Window");
@@ -50,10 +54,10 @@ public class BasicDemo {
 		} catch (Exception e) {
 			// Close the browser.
 			driver.quit();
-			
+
 			//print stacktrace
 			e.printStackTrace();
-			
+
 			//end the main test
 			System.exit(0);
 		} finally {

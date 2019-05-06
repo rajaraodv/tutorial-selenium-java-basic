@@ -1,15 +1,24 @@
-image:
-  file: .gitpod/Dockerfile
-  context: .gitpod
+# we use a pre-build docker image instead of a Dockerfile, because we can pre-fetch that onto Gitpod infrastructure.
+image: meysholdt/applitools-dev-environment:latest
 ports:
+
+  # open up the port for VNC
   - port: 6080
     onOpen: open-preview
-  - port: 4444
-    onOpen: open-browser
-  - port: 5900
+
+  # ignore all other ports
+  - port: 1-6079
+    onOpen: ignore
+  - port: 6081-65534
     onOpen: ignore
 tasks:
+
+# in 'init' we can have bash-code that is executed during the pre-build.
+# We also run 'exec:java' here to ensure all dependencies are fetched.
 - init: >
-    mvn install
+    mvn install;
+    mvn exec:java -Dexec.mainClass="com.applitools.quickstarts.BasicDemo" -Dexec.args=--dry-run
+
+  # in 'command' we have bash-code that is executen in the Gitpod Terminal View when the user opens a workspace.
   command: >
     mvn exec:java -Dexec.mainClass="com.applitools.quickstarts.BasicDemo"

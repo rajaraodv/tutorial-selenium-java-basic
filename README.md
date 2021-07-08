@@ -3,4 +3,5 @@
 3. Change the Applitools API key in the `BasicDemo.java`. Get one by logging into Applitools > Person Icon > My API Key
 4. Run
 
+bla 
 Read more here: https://www.applitools.com/tutorials/selenium-java.html
